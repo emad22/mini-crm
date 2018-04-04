@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\models\Company;
+use  App\models\Company;
 
 class CompanyController extends Controller
 {
@@ -12,11 +12,18 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // return "TEST";
-        $companies = Campany::all();
-        return view('Company.index',compact('companies'));
+        // return view('company.index');
+        /* 
+        *
+        *$items = Item::orderBy('id','DESC')->paginate(5);
+        *return view('ItemCRUD.index',compact('items'))->with('i', ($request->input('page', 1) - 1) * 5);
+        *
+        */
+        $companies = Company::orderBy('id','DESC')->paginate(5);
+        return view('company.index',compact('companies'))->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -26,7 +33,13 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        // 
+        /*
+        *
+        *return view('ItemCRUD.create');
+        *
+        */
+        return View('company.create');
     }
 
     /**
@@ -38,6 +51,20 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         //
+        /*
+        *$this->validate($request, [
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+        *Item::create($request->all());
+        *return redirect()->route('itemCRUD.index')->with('success','Item created successfully');
+        */
+        $this->validate( $request,[
+            'name'=>'required'
+        ]);
+        Company::create($request->all());
+        return redirect()->route('company.index')->with('success','Successfull Add');
+
     }
 
     /**
@@ -49,6 +76,9 @@ class CompanyController extends Controller
     public function show($id)
     {
         //
+        $company = Company::find($id);
+
+        return view('company.show',compact('company'));
     }
 
     /**
@@ -60,6 +90,8 @@ class CompanyController extends Controller
     public function edit($id)
     {
         //
+        $company = Company::find($id);
+        return view('company.edit',compact('company'));
     }
 
     /**
