@@ -1,50 +1,48 @@
-<!-- app/views/nerds/edit.blade.php -->
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Look! I'm CRUDding</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
-
-<nav class="navbar navbar-inverse">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="{{ URL::to('nerds') }}">Nerd Alert</a>
+@extends('layouts.default')
+@section('content')
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>Edit New Item</h2>
+            </div>
+            <div class="pull-right">
+                <a class="btn btn-primary" href="{{ route('company.index') }}"> Back</a>
+            </div>
+        </div>
     </div>
-    <ul class="nav navbar-nav">
-        <li><a href="{{ URL::to('nerds') }}">View All Nerds</a></li>
-        <li><a href="{{ URL::to('nerds/create') }}">Create a Nerd</a>
-    </ul>
-</nav>
-
-<h1>Edit {{ $nerd->name }}</h1>
-
-<!-- if there are creation errors, they will show here -->
-{{ HTML::ul($errors->all()) }}
-
-{{ Form::model($nerd, array('route' => array('nerds.update', $nerd->id), 'method' => 'PUT')) }}
-
-    <div class="form-group">
-        {{ Form::label('name', 'Name') }}
-        {{ Form::text('name', null, array('class' => 'form-control')) }}
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    {!! Form::model($company, ['method' => 'PATCH','route' => ['company.update', $company->id]]) !!}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Company Name:</strong>
+                {!! Form::text('name', null, array('placeholder' => 'Title','class' => 'form-control')) !!}
+            </div>
+            <div class="form-group">
+                <strong>Email:</strong>
+                {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
+            </div>
+            <div class="form-group">
+                <strong>WebSite URL:</strong>
+                {!! Form::text('website', null, array('placeholder' => 'WebSite URL','class' => 'form-control')) !!}
+            </div>
+            <div class="form-group">
+                <strong>Logo:</strong>
+                {!! Form::file('logo', null, array('placeholder' => 'Title','class' => 'form-control')) !!}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 ">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
     </div>
-
-    <div class="form-group">
-        {{ Form::label('email', 'Email') }}
-        {{ Form::email('email', null, array('class' => 'form-control')) }}
-    </div>
-
-    <div class="form-group">
-        {{ Form::label('nerd_level', 'Nerd Level') }}
-        {{ Form::select('nerd_level', array('0' => 'Select a Level', '1' => 'Sees Sunlight', '2' => 'Foosball Fanatic', '3' => 'Basement Dweller'), null, array('class' => 'form-control')) }}
-    </div>
-
-    {{ Form::submit('Edit the Nerd!', array('class' => 'btn btn-primary')) }}
-
-{{ Form::close() }}
-
-</div>
-</body>
-</html>
+    {!! Form::close() !!}
+@endsection

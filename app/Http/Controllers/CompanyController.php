@@ -14,12 +14,10 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-        // return "TEST";
-        // return view('company.index');
         /* 
         *
-        *$items = Item::orderBy('id','DESC')->paginate(5);
-        *return view('ItemCRUD.index',compact('items'))->with('i', ($request->input('page', 1) - 1) * 5);
+        *
+        *
         *
         */
         $companies = Company::orderBy('id','DESC')->paginate(5);
@@ -36,7 +34,7 @@ class CompanyController extends Controller
         // 
         /*
         *
-        *return view('ItemCRUD.create');
+        *
         *
         */
         return View('company.create');
@@ -51,18 +49,27 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         //
-        /*
-        *$this->validate($request, [
-            'title' => 'required',
-            'description' => 'required',
-        ]);
-        *Item::create($request->all());
-        *return redirect()->route('itemCRUD.index')->with('success','Item created successfully');
-        */
         $this->validate( $request,[
             'name'=>'required'
         ]);
-        Company::create($request->all());
+
+       
+        $company = new Company();
+
+        $company->name =$request->input('name');
+        $company->email =$request->input('email');
+        
+        if( $request->hasFile('logo')) {
+            $image = $request->file('logo');
+            $path = public_path(). '/images/';
+            $filename = time() . '.' . $image->extension();
+            $image->move($path, $filename);
+        }
+        // dd($filename);
+        $company->logo=$filename;
+        $company->website =$request->input('website');
+        $company->save();
+        // Company::create($request->all());
         return redirect()->route('company.index')->with('success','Successfull Add');
 
     }
@@ -104,6 +111,12 @@ class CompanyController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate( $request,[
+            'name'=>'required'
+        ]);
+        Company::find($id)->update($request->all());
+        return redirect()->route('company.index')->with('success','Successfull Update');
+
     }
 
     /**
@@ -115,5 +128,8 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         //
+        Company::find($id)->delete();
+        return redirect()->route('company.index')
+                        ->with('success',' deleted successfully');
     }
 }

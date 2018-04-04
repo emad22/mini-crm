@@ -20,7 +20,7 @@
             </ul>
         </div>
     @endif
-    {!! Form::open(array('route' => 'company.store','method'=>'POST')) !!}
+    {!! Form::open(array('route' => 'company.store','method'=>'POST','files'=>TRUE)) !!}
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
@@ -37,7 +37,7 @@
             </div>
             <div class="form-group">
                 <strong>Logo:</strong>
-                {!! Form::file('logo', null, array('placeholder' => 'Title','class' => 'form-control')) !!}
+                {!! Form::file('logo', null, array('placeholder' => 'Logo','class' => 'form-control')) !!}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 ">
