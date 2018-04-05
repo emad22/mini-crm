@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\models\Employee;
+use App\models\Company;
 
 class EmployeeController extends Controller
 {
@@ -11,9 +13,12 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        
+        $employees = Employee::orderBy('id','DESC')->paginate(10);
+        return view('employee.index',compact('employees'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -24,6 +29,17 @@ class EmployeeController extends Controller
     public function create()
     {
         //
+        // $datas = Company::pluck('name','id')->toArray();
+        // $items = Items::pluck('name', 'id');
+        // dd($datas['id']);
+        // $companies = array();
+        // foreach ($datas as $data)
+        // {
+        //     $companies[$data->id] = $data->name;
+        // }
+        $companies = Company::all(['id', 'name']);
+        // return View::make('your view', compact('items',$items));
+        return View('employee.create',compact('companies',$companies));
     }
 
     /**

@@ -20,8 +20,8 @@ class CompanyController extends Controller
         *
         *
         */
-        $companies = Company::orderBy('id','DESC')->paginate(5);
-        return view('company.index',compact('companies'))->with('i', ($request->input('page', 1) - 1) * 5);
+        $companies = Company::orderBy('id','DESC')->paginate(10);
+        return view('company.index',compact('companies'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**
