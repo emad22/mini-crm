@@ -15,10 +15,7 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
         /* 
-        *
-        *
-        *
-        *
+        *PASS COMPANY TO VIEW BLADE 
         */
         $companies = Company::orderBy('id','DESC')->paginate(10);
         return view('company.index',compact('companies'))->with('i', ($request->input('page', 1) - 1) * 10);
@@ -33,10 +30,9 @@ class CompanyController extends Controller
     {
         // 
         /*
-        *
-        *
-        *
+        *RETURN CREATE FORM BLADE
         */
+        //
         return View('company.create');
     }
 

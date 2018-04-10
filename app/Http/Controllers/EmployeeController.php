@@ -51,6 +51,22 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate( $request,[
+            'fname'=>'required',
+            'lname'=>'required'
+        ]);
+        dd($request->input['company_id']);
+        $employee = NEW Employee();
+
+        $employee->fname =$request->input('fname');
+        $employee->lname =$request->input('lname');
+        $employee->email =$request->input('email');
+        $employee->phone =$request->input('phone');
+        $employee->company_id = $request->input['company_id'];
+        $employee->save();
+        // Company::create($request->all());
+        return redirect()->route('company.index')->with('success','Successfull Add');
+
     }
 
     /**
