@@ -8,7 +8,7 @@ class Employee extends Model
 {
     //
     protected $table = 'employees';
-    // protected $fillable = ['name','email','logo','website'];
+    protected $fillable = ['fname','lname','email','phone','company_id'];
     public $timestamps = false;
 
 

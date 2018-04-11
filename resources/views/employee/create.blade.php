@@ -39,14 +39,16 @@
                 <strong>Phone Number</strong>
                 {!! Form::text('phone', null, array('placeholder' => 'Phone Number','class' => 'form-control')) !!}
             </div>
+           
             <div class="form-group">
-                {!! Form::Label('companyName', 'Company Name:') !!}
-                <select class="form-control" name="company_id">
-                    @foreach($companies as $company)
-                        <option value="{{$company->Company_id}}">{{$company->name}}</option>
-                    @endforeach
-                </select>
-            </div>
+                <label>Company Name:</label>
+                    <select class="form-control" id="company_id" name="company_id">
+                        <option value="N/A" dissable="true" selected="true">--SELECT--</option>
+                        @foreach($companies as $company)
+                            <option value="{{$company->id}}">{{$company->name}}</option>
+                        @endforeach
+                    </select>
+            </div>                                                      
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 ">
             <button type="submit" class="btn btn-primary">Submit</button>

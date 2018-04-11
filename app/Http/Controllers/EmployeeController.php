@@ -55,17 +55,18 @@ class EmployeeController extends Controller
             'fname'=>'required',
             'lname'=>'required'
         ]);
-        dd($request->input['company_id']);
-        $employee = NEW Employee();
+        // dd($request->all());
+        Employee::create($request->all());
+        // $employee = NEW Employee();
 
-        $employee->fname =$request->input('fname');
-        $employee->lname =$request->input('lname');
-        $employee->email =$request->input('email');
-        $employee->phone =$request->input('phone');
-        $employee->company_id = $request->input['company_id'];
-        $employee->save();
-        // Company::create($request->all());
-        return redirect()->route('company.index')->with('success','Successfull Add');
+        // $employee->fname =$request->input('fname');
+        // $employee->lname =$request->input('lname');
+        // $employee->email =$request->input('email');
+        // $employee->phone =$request->input('phone');
+        // $employee->company_id = $request->input('company_id');
+        // dd($request->all());
+        // $employee->save();
+        return redirect()->route('empolyee.index')->with('success','Successfull Add');
 
     }
 
